@@ -1,22 +1,24 @@
+from abc import ABC, abstractmethod
 
 
-class User:
-    def __init__(self, name: str, phone_number: str):
-        self.name = name
-        self.phone_number = phone_number
+class User(ABC):
 
     @property
+    @abstractmethod
     def name(self):
-        return self.name
+        ...
 
     @name.setter
+    @abstractmethod
     def name(self, name):
-        self.name = name
+        ...
 
     @property
+    @abstractmethod
     def phone_number(self):
-        return self.phone_number
+        ...
 
     @phone_number.setter
+    @abstractmethod
     def phone_number(self, phone_number):
-        self.phone_number = phone_number
+        ...

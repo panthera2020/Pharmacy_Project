@@ -1,25 +1,31 @@
-from customer import Customer
 from user import User
 
 class Admin(User):
-    def __init__(self,name, id: int, phone_number):
-        super().__init__(name, phone_number)
-        self.id = id
-        self.customers = []
+    def __init__(self,name, admin_id: int, phone_number):
+        self._name = name
+        self._phone_number = phone_number
+        self._admin_id = admin_id
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        self._name = name
+
+    @property
+    def phone_number(self):
+        return self._phone_number
+
+    @phone_number.setter
+    def phone_number(self, phone_number):
+        self._phone_number = phone_number
 
     @property
     def id(self):
-        return self.id
+        return self._id
 
     @id.setter
     def id(self, number):
-        self.id = number
-
-    def add(self, customer:Customer):
-        self.customers.append(customer)
-
-    def get(self, customer_id):
-        for customer in self.customers:
-            if customer.id == customer_id:
-                return customer
-        return None
+        self._id = number

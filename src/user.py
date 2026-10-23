@@ -3,6 +3,10 @@ from abc import ABC, abstractmethod
 
 class User(ABC):
 
+    def __init__(self, name, phone_number):
+        self.name = name
+        self.phone_number = phone_number
+
     @property
     @abstractmethod
     def name(self):

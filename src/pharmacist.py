@@ -1,10 +1,11 @@
+
 from user import User
+
 
 class Pharmacist(User):
 
     def __init__(self, name, phone_number):
-        self._name = name
-        self._phone_number = phone_number
+        super().__init__(name, phone_number)
         self._pharmacist_id = None
 
     @property
@@ -30,3 +31,16 @@ class Pharmacist(User):
     @id.setter
     def id(self, id_number):
         self._pharmacist_id = id_number
+
+    def search_item(self, pharmacy, name):
+        return pharmacy.search_item(name)
+
+    def check_availability(self, item, quantity):
+        return item.is_available(quantity) and not item.is_expired()
+
+    def sell_item(self, item, quantity):
+        if self.check_availability(item, quantity):
+            item.reduce_stock(quantity)
+            return item.price * quantity
+
+        return None

@@ -1,9 +1,11 @@
+
 from item import Item
 
 
 class Drug(Item):
-    def __init__(self, name, price, expiry_date, drug_type: str):
-        super().__init__(name, price, expiry_date)
+
+    def __init__(self, name, price, expiry_date, quantity, drug_type):
+        super().__init__(name, price, expiry_date, quantity)
         self._drug_type = drug_type
 
     @property

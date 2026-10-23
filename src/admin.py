@@ -35,7 +35,6 @@ class Admin(User):
     def register_pharmacist(self, pharmacy, pharmacist):
         if pharmacist in pharmacy.pharmacists:
             return False
-
         pharmacist.id = self.generate_id()
         registered = pharmacy.register_pharmacist(pharmacist)
 

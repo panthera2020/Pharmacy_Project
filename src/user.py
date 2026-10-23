@@ -7,6 +7,7 @@ class User(ABC):
         self.name = name
         self.phone_number = phone_number
 
+
     @property
     @abstractmethod
     def name(self):

@@ -1,9 +1,3 @@
-import os
-import sys
-
-SRC_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
-if SRC_PATH not in sys.path:
-    sys.path.insert(0, SRC_PATH)
 
 import unittest
 from datetime import date, timedelta
@@ -34,6 +28,7 @@ class AdminTest(unittest.TestCase):
 
     def test_register_pharmacist_assigns_id(self):
         result = self.admin.register_pharmacist(self.pharmacy, self.pharmacist)
+
         self.assertTrue(result)
         self.assertEqual(self.pharmacist.id, 1)
         self.assertIn(self.pharmacist, self.pharmacy.pharmacists)
@@ -42,17 +37,20 @@ class AdminTest(unittest.TestCase):
         another = Pharmacist("Mary", "08033333333")
         self.assertTrue(self.admin.register_pharmacist(self.pharmacy, self.pharmacist))
         self.assertTrue(self.admin.register_pharmacist(self.pharmacy, another))
+
         self.assertEqual(self.pharmacist.id, 1)
         self.assertEqual(another.id, 2)
 
     def test_duplicate_registration_is_rejected(self):
         self.assertTrue(self.admin.register_pharmacist(self.pharmacy, self.pharmacist))
         self.assertFalse(self.admin.register_pharmacist(self.pharmacy, self.pharmacist))
+
         self.assertEqual(self.pharmacist.id, 1)
         self.assertEqual(len(self.pharmacy.pharmacists), 1)
 
     def test_remove_pharmacist(self):
         self.admin.register_pharmacist(self.pharmacy, self.pharmacist)
+
         result = self.admin.remove_pharmacist(self.pharmacy, self.pharmacist)
         self.assertTrue(result)
         self.assertNotIn(self.pharmacist, self.pharmacy.pharmacists)

@@ -1,9 +1,3 @@
-import os
-import sys
-
-SRC_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
-if SRC_PATH not in sys.path:
-    sys.path.insert(0, SRC_PATH)
 
 import unittest
 from datetime import date, timedelta
@@ -32,6 +26,7 @@ class CustomerTest(unittest.TestCase):
         self.assertEqual(self.customer.id, 20)
 
     def test_search_item(self):
+
         self.assertIs(self.customer.search_item(self.pharmacy, "Paracetamol"), self.item)
 
     def test_add_to_cart(self):

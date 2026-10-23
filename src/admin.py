@@ -1,4 +1,3 @@
-
 from user import User
 
 
@@ -7,7 +6,7 @@ class Admin(User):
     def __init__(self, name, admin_id, phone_number):
         super().__init__(name, phone_number)
         self._admin_id = admin_id
-        self.id_number = 0;
+        self.id_number = 0
 
     @property
     def name(self):
@@ -34,8 +33,18 @@ class Admin(User):
         self._admin_id = number
 
     def register_pharmacist(self, pharmacy, pharmacist):
-        pharmacist.id(self.generate_id())
-        return pharmacy.register_pharmacist(pharmacist)
+        if pharmacist in pharmacy.pharmacists:
+            return False
+
+        pharmacist.id = self.generate_id()
+        registered = pharmacy.register_pharmacist(pharmacist)
+
+        if registered:
+            self.id_number = pharmacist.id
+            return True
+
+        pharmacist.id = None
+        return False
 
     def remove_pharmacist(self, pharmacy, pharmacist):
         return pharmacy.remove_pharmacist(pharmacist)
@@ -69,4 +78,4 @@ class Admin(User):
         return expired_stock
 
     def generate_id(self):
-        return self.id_number +1
+        return self.id_number + 1

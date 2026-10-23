@@ -1,3 +1,9 @@
+import os
+import sys
+
+SRC_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
+if SRC_PATH not in sys.path:
+    sys.path.insert(0, SRC_PATH)
 
 import unittest
 from datetime import date, timedelta
@@ -9,10 +15,7 @@ class ItemTest(unittest.TestCase):
 
     def setUp(self):
         self.item = Item(
-            "Paracetamol",
-            500,
-            date.today() + timedelta(days=30),
-            10
+            "Paracetamol", 500, date.today() + timedelta(days=30), 10
         )
 
     def test_item_attributes(self):
@@ -24,7 +27,6 @@ class ItemTest(unittest.TestCase):
         self.item.name = "Ibuprofen"
         self.item.price = 700
         self.item.quantity = 20
-
         self.assertEqual(self.item.name, "Ibuprofen")
         self.assertEqual(self.item.price, 700)
         self.assertEqual(self.item.quantity, 20)
@@ -39,35 +41,23 @@ class ItemTest(unittest.TestCase):
         self.assertFalse(self.item.is_available(0))
 
     def test_reduce_stock(self):
-        result = self.item.reduce_stock(3)
-
-        self.assertTrue(result)
+        self.assertTrue(self.item.reduce_stock(3))
         self.assertEqual(self.item.quantity, 7)
 
     def test_cannot_reduce_more_than_available(self):
-        result = self.item.reduce_stock(15)
-
-        self.assertFalse(result)
+        self.assertFalse(self.item.reduce_stock(15))
         self.assertEqual(self.item.quantity, 10)
 
     def test_increase_stock(self):
-        result = self.item.increase_stock(5)
-
-        self.assertTrue(result)
+        self.assertTrue(self.item.increase_stock(5))
         self.assertEqual(self.item.quantity, 15)
 
     def test_cannot_increase_by_zero(self):
-        result = self.item.increase_stock(0)
-
-        self.assertFalse(result)
+        self.assertFalse(self.item.increase_stock(0))
         self.assertEqual(self.item.quantity, 10)
 
     def test_expired_item(self):
-        expired_item = Item(
-            "Old Drug", 200,
-            date.today() - timedelta(days=1), 5
-        )
-
+        expired_item = Item("Old Drug", 200, date.today() - timedelta(days=1), 5)
         self.assertTrue(expired_item.is_expired())
 
     def test_unexpired_item(self):

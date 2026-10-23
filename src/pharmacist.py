@@ -1,4 +1,3 @@
-
 from user import User
 
 
@@ -39,8 +38,11 @@ class Pharmacist(User):
         return item.is_available(quantity) and not item.is_expired()
 
     def sell_item(self, item, quantity):
+        if self.id is None:
+            return None
+
         if self.check_availability(item, quantity):
-            item.reduce_stock(quantity)
-            return item.price * quantity
+            if item.reduce_stock(quantity):
+                return item.price * quantity
 
         return None
